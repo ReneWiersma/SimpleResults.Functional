@@ -6,6 +6,11 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
+
+	<ItemGroup>
+		<None Include="README.md" Pack="true" PackagePath="" />
+	</ItemGroup>
+
 	<ItemGroup>
 		<PackageReference Include="SoftwareMadeSimple.SimpleResults" Version="1.1.0" />
 	</ItemGroup>
@@ -18,5 +23,6 @@
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ReneWiersma/SimpleResults.Functional</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ReneWiersma/SimpleResults.Functional</RepositoryUrl>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
 	</PropertyGroup>
 </Project>
