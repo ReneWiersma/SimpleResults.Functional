@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SimpleResults.Functional.Tests/SoftwareMadeSimple.SimpleResults.Functional.Tests.csproj" Id="1bc87f81-144c-4fa2-a685-1029e203608f" />
+  <Project Path="SimpleResults.Functional/SoftwareMadeSimple.SimpleResults.Functional.csproj" Id="4987bc5c-5f7a-4461-bff0-93e115f3b180" />
+</Solution>

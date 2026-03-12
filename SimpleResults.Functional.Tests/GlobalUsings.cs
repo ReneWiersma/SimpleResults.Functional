@@ -1,0 +1,1 @@
+﻿global using ValidationErrors = System.Collections.Generic.IEnumerable<SoftwareMadeSimple.SimpleResults.Functional.Tests.ValidationError>;
