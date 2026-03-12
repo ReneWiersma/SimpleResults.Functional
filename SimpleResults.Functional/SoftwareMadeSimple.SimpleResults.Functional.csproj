@@ -6,9 +6,9 @@
 		<Nullable>enable</Nullable>
 	</PropertyGroup>
 
-
 	<ItemGroup>
 		<None Include="README.md" Pack="true" PackagePath="" />
+		<None Include="icon.png" Pack="true" PackagePath="" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -17,12 +17,13 @@
 
 	<PropertyGroup>
 		<PackageId>SoftwareMadeSimple.SimpleResults.Functional</PackageId>
-		<Version>1.0.0</Version>
+		<Version>1.0.1</Version>
 		<Authors>René Wiersma</Authors>
 		<Description>Functional applicative extensions for SoftwareMadeSimple.SimpleResults, providing Lift and Apply with error accumulation.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ReneWiersma/SimpleResults.Functional</PackageProjectUrl>
 		<RepositoryUrl>https://github.com/ReneWiersma/SimpleResults.Functional</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageIcon>icon.png</PackageIcon>
 	</PropertyGroup>
 </Project>
