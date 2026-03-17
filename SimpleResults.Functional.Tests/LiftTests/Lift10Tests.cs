@@ -1,10 +1,10 @@
 using SoftwareMadeSimple.SimpleResults.Functional;
 
-namespace SoftwareMadeSimple.SimpleResults.Functional.Tests;
+namespace SoftwareMadeSimple.SimpleResults.Functional.Tests.LiftTests;
 
-public sealed class Lift9Tests
+public sealed class Lift10Tests
 {
-    private sealed record TestPerson(string Name, int Age, string ThirdValue, string FourthValue, string FifthValue, string SixthValue, string SeventhValue, string EighthValue, string NinthValue);
+    private sealed record TestPerson(string Name, int Age, string ThirdValue, string FourthValue, string FifthValue, string SixthValue, string SeventhValue, string EighthValue, string NinthValue, string TenthValue);
 
     [Test]
     public void Success()
@@ -18,11 +18,12 @@ public sealed class Lift9Tests
         Result<string, ValidationErrors> seventhResult = "Seventh value";
         Result<string, ValidationErrors> eighthResult = "Eighth value";
         Result<string, ValidationErrors> ninthResult = "Ninth value";
+        Result<string, ValidationErrors> tenthResult = "Tenth value";
 
         var result =
             LiftResult<ValidationErrors>
-                .Lift((string name, int age, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth) =>
-                    new TestPerson(name, age, third, fourth, fifth, sixth, seventh, eighth, ninth))
+                .Lift((string name, int age, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth) =>
+                    new TestPerson(name, age, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth))
                 .Apply(nameResult)
                 .Apply(ageResult)
                 .Apply(thirdResult)
@@ -31,14 +32,18 @@ public sealed class Lift9Tests
                 .Apply(sixthResult)
                 .Apply(seventhResult)
                 .Apply(eighthResult)
-                .Apply(ninthResult);
+                .Apply(ninthResult)
+                .Apply(tenthResult);
 
-        Assert.That(result.IsSuccess);
-        Assert.That(result.Value, Is.EqualTo(new TestPerson("Alice", 42, "Third value", "Fourth value", "Fifth value", "Sixth value", "Seventh value", "Eighth value", "Ninth value")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsSuccess);
+            Assert.That(result.Value, Is.EqualTo(new TestPerson("Alice", 42, "Third value", "Fourth value", "Fifth value", "Sixth value", "Seventh value", "Eighth value", "Ninth value", "Tenth value")));
+        }
     }
 
     [Test]
-    public void SingleFailureOnNinth()
+    public void SingleFailureOnTenth()
     {
         Result<string, ValidationErrors> nameResult = "Alice";
         Result<int, ValidationErrors> ageResult = 42;
@@ -48,12 +53,13 @@ public sealed class Lift9Tests
         Result<string, ValidationErrors> sixthResult = "Sixth value";
         Result<string, ValidationErrors> seventhResult = "Seventh value";
         Result<string, ValidationErrors> eighthResult = "Eighth value";
-        Result<string, ValidationErrors> ninthResult = new List<ValidationError> { new("Invalid value") };
+        Result<string, ValidationErrors> ninthResult = "Ninth value";
+        Result<string, ValidationErrors> tenthResult = new List<ValidationError> { new("Invalid value") };
 
         var result =
             LiftResult<ValidationErrors>
-                .Lift((string name, int age, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth) =>
-                    new TestPerson(name, age, third, fourth, fifth, sixth, seventh, eighth, ninth))
+                .Lift((string name, int age, string third, string fourth, string fifth, string sixth, string seventh, string eighth, string ninth, string tenth) =>
+                    new TestPerson(name, age, third, fourth, fifth, sixth, seventh, eighth, ninth, tenth))
                 .Apply(nameResult)
                 .Apply(ageResult)
                 .Apply(thirdResult)
@@ -62,10 +68,14 @@ public sealed class Lift9Tests
                 .Apply(sixthResult)
                 .Apply(seventhResult)
                 .Apply(eighthResult)
-                .Apply(ninthResult);
+                .Apply(ninthResult)
+                .Apply(tenthResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(1));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid value")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(1));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid value")));
+        }
     }
 }

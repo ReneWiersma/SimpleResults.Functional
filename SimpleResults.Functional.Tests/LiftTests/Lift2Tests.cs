@@ -1,6 +1,6 @@
 ﻿using SoftwareMadeSimple.SimpleResults.Functional;
 
-namespace SoftwareMadeSimple.SimpleResults.Functional.Tests;
+namespace SoftwareMadeSimple.SimpleResults.Functional.Tests.LiftTests;
 
 public sealed class Lift2Tests
 {
@@ -17,8 +17,11 @@ public sealed class Lift2Tests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsSuccess);
-        Assert.That(result.Value, Is.EqualTo(new TestPerson("Alice", 42)));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsSuccess);
+            Assert.That(result.Value, Is.EqualTo(new TestPerson("Alice", 42)));
+        }
     }
 
     [Test]
@@ -33,8 +36,11 @@ public sealed class Lift2Tests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(1));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(1));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age")));
+        }
     }
 }

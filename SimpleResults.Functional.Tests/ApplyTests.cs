@@ -18,9 +18,12 @@ public sealed class ApplyTests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(1));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(1));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name")));
+        }
     }
 
     [Test]
@@ -35,9 +38,12 @@ public sealed class ApplyTests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(2));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(2));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+        }
         Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
     }
 
@@ -53,9 +59,12 @@ public sealed class ApplyTests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(1));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(1));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age")));
+        }
     }
 
     [Test]
@@ -70,9 +79,12 @@ public sealed class ApplyTests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(2));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(2));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
+        }
         Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
     }
 
@@ -88,9 +100,12 @@ public sealed class ApplyTests
                 .Apply(nameResult)
                 .Apply(ageResult);
 
-        Assert.That(result.IsFailure);
-        Assert.That(result.Error.Count(), Is.EqualTo(4));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(result.IsFailure);
+            Assert.That(result.Error.Count(), Is.EqualTo(4));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+        }
         Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
         Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
         Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
