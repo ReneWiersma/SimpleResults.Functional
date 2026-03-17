@@ -19,6 +19,7 @@
 		<PackageId>SoftwareMadeSimple.SimpleResults.Functional</PackageId>
 		<Version>1.1.0</Version>
 		<Authors>René Wiersma</Authors>
+		<Copyright>© 2026 René Wiersma</Copyright>
 		<Description>Functional extensions for SoftwareMadeSimple.SimpleResults, providing Map, Bind, MapError, BindError, Match, Unit, and applicative Lift/Apply with error accumulation.</Description>
 		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 		<PackageProjectUrl>https://github.com/ReneWiersma/SimpleResults.Functional</PackageProjectUrl>
