@@ -6,4 +6,9 @@ public static class ResultBindExtensions
         result.IsSuccess
             ? f(result.Value)
             : result.Error;
+
+    public static Result<T, F> BindError<T, E, F>(this Result<T, E> result, Func<E, Result<T, F>> f) =>
+        result.IsSuccess
+            ? result.Value
+            : f(result.Error);
 }

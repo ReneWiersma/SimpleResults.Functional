@@ -6,4 +6,9 @@ public static class ResultMapExtensions
         result.IsSuccess
             ? f(result.Value)
             : result.Error;
+
+    public static Result<T, F> MapError<T, E, F>(this Result<T, E> result, Func<E, F> f) =>
+        result.IsSuccess
+            ? result.Value
+            : f(result.Error);
 }

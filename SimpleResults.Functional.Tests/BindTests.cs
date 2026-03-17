@@ -7,10 +7,10 @@ public sealed class BindTests
     [Test]
     public void SuccessResultIsBoundToTransformedResult()
     {
-        static Result<int, string> Handle(int x) => x * 2;
+        static Result<int, string> MultiplyByTwo(int x) => x * 2;
         Result<int, string> result = 5;
 
-        var bound = result.Bind(Handle);
+        var bound = result.Bind(MultiplyByTwo);
 
         using (Assert.EnterMultipleScope())
         {
@@ -22,10 +22,10 @@ public sealed class BindTests
     [Test]
     public void FailureResultPreservesOriginalError()
     {
-        static Result<int, string> Handle(int x) => x * 2;
+        static Result<int, string> MultiplyByTwo(int x) => x * 2;
         Result<int, string> result = "something went wrong";
 
-        var bound = result.Bind(Handle);
+        var bound = result.Bind(MultiplyByTwo);
 
         using (Assert.EnterMultipleScope())
         {
@@ -37,10 +37,10 @@ public sealed class BindTests
     [Test]
     public void BindChangesTheValueType()
     {
-        static Result<long, string> Handle(int x) => x;
+        static Result<long, string> ToLong(int x) => x;
         Result<int, string> result = 42;
 
-        var bound = result.Bind(Handle);
+        var bound = result.Bind(ToLong);
 
         using (Assert.EnterMultipleScope())
         {
@@ -52,14 +52,14 @@ public sealed class BindTests
     [Test]
     public void BindFunctionIsNotInvokedOnFailure()
     {
-        static Result<int, string> Handle(int x) => x * 2;
+        static Result<int, string> MultiplyByTwo(int x) => x * 2;
         Result<int, string> result = "error";
         bool wasCalled = false;
 
         var bound = result.Bind(x =>
         {
             wasCalled = true;
-            return Handle(x);
+            return MultiplyByTwo(x);
         });
 
         using (Assert.EnterMultipleScope())

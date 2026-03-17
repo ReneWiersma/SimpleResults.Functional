@@ -1,6 +1,6 @@
 ﻿namespace SoftwareMadeSimple.SimpleResults.Functional;
 
-public static class ResultApplicativeExtensions
+public static class ResultApplyExtensions
 {
     extension<T, R, E>(Result<Func<T, R>, IEnumerable<E>> resultFunc)
     {
