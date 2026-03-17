@@ -25,5 +25,6 @@
 		<RepositoryUrl>https://github.com/ReneWiersma/SimpleResults.Functional</RepositoryUrl>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageIcon>icon.png</PackageIcon>
+		<PackageTags>result;functional;monad;applicative;map;bind;match;railway;error-handling;validation</PackageTags>
 	</PropertyGroup>
 </Project>
