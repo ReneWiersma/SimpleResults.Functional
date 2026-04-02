@@ -43,8 +43,8 @@ public sealed class ApplyTests
             Assert.That(result.IsFailure);
             Assert.That(result.Error.Count(), Is.EqualTo(2));
             Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
         }
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
     }
 
     [Test]
@@ -84,8 +84,8 @@ public sealed class ApplyTests
             Assert.That(result.IsFailure);
             Assert.That(result.Error.Count(), Is.EqualTo(2));
             Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
         }
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
     }
 
     [Test]
@@ -105,9 +105,9 @@ public sealed class ApplyTests
             Assert.That(result.IsFailure);
             Assert.That(result.Error.Count(), Is.EqualTo(4));
             Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 1")));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
+            Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
         }
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid name 2")));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 1")));
-        Assert.That(result.Error, Does.Contain(new ValidationError("Invalid age 2")));
     }
 }
