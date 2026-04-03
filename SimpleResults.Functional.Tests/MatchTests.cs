@@ -107,4 +107,56 @@ public sealed class MatchTests
 
         Assert.That(matched, Is.EqualTo("Result: 246"));
     }
+
+    [Test]
+    public void ActionMatchCallsOnSuccessForSuccessResult()
+    {
+        Result<int, string> result = 42;
+        int captured = 0;
+
+        result.Match(
+            value => captured = value,
+            _ => { });
+
+        Assert.That(captured, Is.EqualTo(42));
+    }
+
+    [Test]
+    public void ActionMatchCallsOnFailureForFailureResult()
+    {
+        Result<int, string> result = "something went wrong";
+        string captured = "";
+
+        result.Match(
+            _ => { },
+            error => captured = error);
+
+        Assert.That(captured, Is.EqualTo("something went wrong"));
+    }
+
+    [Test]
+    public void ActionMatchDoesNotCallOnSuccessForFailureResult()
+    {
+        Result<int, string> result = "error";
+        bool wasCalled = false;
+
+        result.Match(
+            _ => wasCalled = true,
+            _ => { });
+
+        Assert.That(wasCalled, Is.False);
+    }
+
+    [Test]
+    public void ActionMatchDoesNotCallOnFailureForSuccessResult()
+    {
+        Result<int, string> result = 42;
+        bool wasCalled = false;
+
+        result.Match(
+            _ => { },
+            _ => wasCalled = true);
+
+        Assert.That(wasCalled, Is.False);
+    }
 }

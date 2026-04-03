@@ -135,6 +135,17 @@ string output = result
 // output == "Result: 10"
 ```
 
+An `Action`-based overload is also available for performing side effects without returning a value:
+
+```csharp
+Result<int, string> result = 42;
+
+result.Match(
+    value => Console.WriteLine($"Got {value}"),
+    error => Console.WriteLine($"Failed: {error}"));
+// prints "Got 42"
+```
+
 ### Unit
 
 A type that represents the absence of a value, used in place of `void` since `void` cannot be a generic type parameter. This enables `Result<Unit, E>` for operations that either succeed with no meaningful value or fail.
@@ -202,6 +213,7 @@ var result =
 | `Bind` | `Result<T, E> ? Func<T, Result<R, E>> ? Result<R, E>` | Chain failable operations |
 | `BindError` | `Result<T, E> ? Func<E, Result<T, F>> ? Result<T, F>` | Recover from errors |
 | `Match` | `Result<T, E> ? Func<T, R> ? Func<E, R> ? R` | Eliminate the Result type |
+| `Match` | `Result<T, E> ? Action<T> ? Action<E> ? void` | Perform side effects per case |
 | `Lift` | `Func<T1, ..., R> ? Result<Func<...>, E>` | Lift a function into Result |
 | `Apply` | `Result<Func<T, R>, E> ? Result<T, E> ? Result<R, E>` | Apply with error accumulation |
 | `Unit` | — | Value type representing void |

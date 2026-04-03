@@ -6,4 +6,12 @@ public static class ResultMatchExtensions
         result.IsSuccess
             ? onSuccess(result.Value)
             : onFailure(result.Error);
+
+    public static void Match<T, E>(this Result<T, E> result, Action<T> onSuccess, Action<E> onFailure)
+    {
+        if (result.IsSuccess)
+            onSuccess(result.Value);
+        else
+            onFailure(result.Error);
+    }
 }
