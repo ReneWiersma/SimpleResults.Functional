@@ -82,4 +82,19 @@ public sealed class BindErrorAsyncTests
             Assert.That(bound.Value, Is.EqualTo(42));
         }
     }
+
+    [Test]
+    public async Task BindErrorAsyncFunctionReturningFailurePropagatesNewError()
+    {
+        static Task<Result<int, string>> Remap(string _) => Task.FromResult<Result<int, string>>("remapped error");
+        Result<int, string> result = "original error";
+
+        var bound = await result.BindErrorAsync(Remap);
+
+        using (Assert.EnterMultipleScope())
+        {
+            Assert.That(bound.IsFailure);
+            Assert.That(bound.Error, Is.EqualTo("remapped error"));
+        }
+    }
 }

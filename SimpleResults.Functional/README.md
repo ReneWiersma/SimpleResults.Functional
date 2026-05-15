@@ -66,6 +66,27 @@ var bound = input
 // bound.Value == 42
 ```
 
+### BindAsync
+
+The async version of `Bind` for operations that return a `Task<Result>`. Two overloads are provided: one for when the source is already a `Result`, and one for when it is a `Task<Result>`, enabling seamless chaining in async pipelines.
+
+```csharp
+Task<Result<int, string>> ParseAsync(string s) =>
+    Task.FromResult<Result<int, string>>(
+        int.TryParse(s, out var n) ? n : "not a number");
+
+Task<Result<int, string>> ValidateAsync(int x) =>
+    Task.FromResult<Result<int, string>>(
+        x > 0 ? x : "must be positive");
+
+Result<string, string> input = "42";
+
+var result = await input
+    .Bind(Parse)
+    .BindAsync(ValidateAsync);
+// result.Value == 42
+```
+
 ### MapError
 
 Transform the error value of a `Result`, leaving a success unchanged. Useful for converting between error types at layer boundaries.
@@ -103,6 +124,21 @@ var recovered = result
     .BindError(FirstFallback)
     .BindError(SecondFallback);
 // recovered.Value == 99
+```
+
+### BindErrorAsync
+
+The async version of `BindError` for recovery operations that return a `Task<Result>`. Like `BindAsync`, it supports both `Result` and `Task<Result>` sources.
+
+```csharp
+Task<Result<int, string>> TryCacheAsync(string error) =>
+    Task.FromResult<Result<int, string>>(
+        error == "not found" ? 42 : error);
+
+Result<int, string> result = "not found";
+
+var recovered = await result.BindErrorAsync(TryCacheAsync);
+// recovered.Value == 42
 ```
 
 ### Match
@@ -211,7 +247,9 @@ var result =
 | `Map` | `Result<T, E> ? Func<T, R> ? Result<R, E>` | Transform the success value |
 | `MapError` | `Result<T, E> ? Func<E, F> ? Result<T, F>` | Transform the error value |
 | `Bind` | `Result<T, E> ? Func<T, Result<R, E>> ? Result<R, E>` | Chain failable operations |
+| `BindAsync` | `Result<T, E> ? Func<T, Task<Result<R, E>>> ? Task<Result<R, E>>` | Async chain failable operations |
 | `BindError` | `Result<T, E> ? Func<E, Result<T, F>> ? Result<T, F>` | Recover from errors |
+| `BindErrorAsync` | `Result<T, E> ? Func<E, Task<Result<T, F>>> ? Task<Result<T, F>>` | Async recover from errors |
 | `Match` | `Result<T, E> ? Func<T, R> ? Func<E, R> ? R` | Eliminate the Result type |
 | `Match` | `Result<T, E> ? Action<T> ? Action<E> ? void` | Perform side effects per case |
 | `Lift` | `Func<T1, ..., R> ? Result<Func<...>, E>` | Lift a function into Result |
